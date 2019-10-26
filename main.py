@@ -42,7 +42,7 @@ async def on_message(message):
                     help_message = help_message + "- " + s.name + "\n"
                 await send_msg(message.channel, help_message)
             elif cmd == "!RELOADCHANNEL":
-                if message.user.id == "223871330603237376":
+                if message.author.id == "223871330603237376":
                     with open('channel.yml', 'rt', encoding='utf8') as yml:
                         settings.channel = yaml.load(yml)
                     task = send_msg(message.channel, "Channel updated successfully.")
