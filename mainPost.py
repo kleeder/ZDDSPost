@@ -41,11 +41,13 @@ async def on_message(message):
                 for s in settings.client.servers:
                     help_message = help_message + "- " + s.name + "\n"
                 await send_msg(message.channel, help_message)
-            elif cmd == "!RELOADCHANNEL":
+            elif cmd == "!RELOADYAML":
                 if message.author.id == "223871330603237376":
                     with open('channel.yml', 'rt', encoding='utf8') as yml:
                         settings.channel = yaml.load(yml)
-                    task = send_msg(message.channel, "Channel updated successfully.")
+                    with open('userblock.yml', 'rt', encoding='utf8') as yml:
+                        settings.userblock = yaml.load(yml)
+                    task = send_msg(message.channel, "Yaml updated successfully.")
                     await task
             else:
                 if message.author.id in settings.userblock:
