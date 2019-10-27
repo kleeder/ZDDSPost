@@ -48,13 +48,20 @@ async def on_message(message):
                     task = send_msg(message.channel, "Channel updated successfully.")
                     await task
             else:
-                for i in settings.channel:
-                    if not i == channel:
-                        try:
-                            next_ch = settings.client.get_channel('{}'.format(i))
-                            await send_msg(next_ch, new_message)
-                        except:
-                            pass
+                if message.author.id in settings.userblock:
+                    task = send_msg(message.channel, "{} Deine Nachricht wurde nicht weitergeleitet, da du auf der Blacklist stehst.".format(message.author.mention))
+                    await task
+                else:
+                    f = open("userlog.txt", "a")
+                    f.write("{}: {}\n".format(message.author.name, message.author.id))
+                    f.close()
+                    for i in settings.channel:
+                        if not i == channel:
+                            try:
+                                next_ch = settings.client.get_channel('{}'.format(i))
+                                await send_msg(next_ch, new_message)
+                            except:
+                                pass
 
 @settings.client.event
 async def send_msg(channel, msg):
